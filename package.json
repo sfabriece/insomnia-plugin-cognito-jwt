@@ -1,0 +1,30 @@
+{
+  "name": "insomnia-plugin-cognito-jwt",
+  "version": "0.0.1",
+  "description": "Plugin for Insomnia to provide JWT token from AWS Cognito using username and password",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sfabriece/insomnia-plugin-cognito-jwt.git"
+  },
+  "author": "Fabriece Sumuni",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sfabriece/insomnia-plugin-cognito-jwt/issues"
+  },
+  "homepage": "https://github.com/sfabriece/insomnia-plugin-cognito-jwt#readme",
+  "keywords": [
+    "insomnia",
+    "plugin",
+    "AWS",
+    "Cognito",
+    "JWT"
+  ],
+  "insomnia": {
+    "name": "Aws Cognito JWT Client Grant",
+    "description": "Plugin for Insomnia to provide JWT token from AWS Cognito using username and password"
+  }
+}

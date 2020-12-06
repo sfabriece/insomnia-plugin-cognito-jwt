@@ -21,20 +21,17 @@ const configureAuth = ({ Region, UserPoolId, ClientId }) => {
 
 // Get JWT Token from Cognito
 const session = async ({ Username, Password }) => {
-  // const response = await Auth.signIn(Username, Password);
-  // if (!response) {
-  //   console.log(
-  //     "Looks like there was a problem. Status Code: " + response.status
-  //   );
-  //   return;
-  // }
+  const response = await Auth.signIn(Username, Password);
+  if (!response) {
+    console.log(
+      'Looks like there was a problem. Status Code: ' + response.status,
+    );
+    return;
+  }
 
-  // console.log("%o", response.signInUserSession.accessToken.jwtToken);
+  console.log('%o', response.signInUserSession.accessToken.jwtToken);
 
-  // return response.signInUserSession.accessToken.jwtToken;
-
-  console.log('in here');
-  return 'token';
+  return response.signInUserSession.accessToken.jwtToken;
 };
 
 // Validate if the token has expired
@@ -90,7 +87,6 @@ const run = async (
   Region,
   UserPoolId,
   ClientId,
-  TokenType,
 ) => {
   if (!Username) {
     throw new Error('Username attribute is required');
@@ -107,29 +103,18 @@ const run = async (
   if (!ClientId) {
     throw new Error('ClientId attribute is required');
   }
-  if (!TokenType) {
-    TokenType = 'access';
-  }
 
   const args = {
     Username,
     Password,
     Region,
     ClientId,
-    TokenType,
     UserPoolId,
   };
 
   await configureAuth(args);
 
-  const key = [
-    Username,
-    Password,
-    Region,
-    UserPoolId,
-    ClientId,
-    TokenType,
-  ].join('::');
+  const key = [Username, Password, Region, UserPoolId, ClientId].join('::');
   const token = await context.store.getItem(key);
   if (token && validToken(token)) {
     if (jwtDecode(token).error) {
@@ -160,16 +145,6 @@ module.exports.templateTags = [
     description: 'Plugin for Insomnia to provide Cognito JWT token from AWS',
     args: [
       {
-        displayName: 'Username',
-        type: 'string',
-        validate: (arg) => (arg ? '' : 'Required'),
-      },
-      {
-        displayName: 'Password',
-        type: 'string',
-        validate: (arg) => (arg ? '' : 'Required'),
-      },
-      {
         displayName: 'Region',
         type: 'string',
         validate: (arg) => (arg ? '' : 'Required'),
@@ -185,19 +160,14 @@ module.exports.templateTags = [
         validate: (arg) => (arg ? '' : 'Required'),
       },
       {
-        displayName: 'TokenType',
-        type: 'enum',
-        defaultValue: 'access',
-        options: [
-          {
-            displayName: 'access',
-            value: 'access',
-          },
-          {
-            displayName: 'id',
-            value: 'id',
-          },
-        ],
+        displayName: 'Username',
+        type: 'string',
+        validate: (arg) => (arg ? '' : 'Required'),
+      },
+      {
+        displayName: 'Password',
+        type: 'string',
+        validate: (arg) => (arg ? '' : 'Required'),
       },
     ],
     run,

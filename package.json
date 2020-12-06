@@ -26,5 +26,10 @@
   "insomnia": {
     "name": "Aws Cognito JWT Client Grant",
     "description": "Plugin for Insomnia to provide JWT token from AWS Cognito using username and password"
+  },
+  "dependencies": {
+    "aws-amplify": "3.3.11",
+    "crypto-js": "4.0.0",
+    "jwt-decode": "3.1.2"
   }
 }
